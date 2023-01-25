@@ -13,8 +13,8 @@ export const USER_CONNECTION = async (parent, { email, password }, { req, res })
     if (reqToken) {
       const cookie_options = {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'PROD',
         sameSite: 'none',
+        secure: true,
         maxAge: 1,
       };
       res.cookie('authorization', 'Bearer ' + token, cookie_options);
@@ -25,10 +25,13 @@ export const USER_CONNECTION = async (parent, { email, password }, { req, res })
     if (await bcrypt.compare(password, user.password)) {
       const cookie_options = {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'PROD',
         sameSite: 'none',
+        secure: true,
         maxAge: 1000 * 60 * 60 * 24 * 7, //Store for 7 days
       };
+
+      console.log('COOKIE OPTION : ', cookie_options);
+
       const token = jwt.sign({ _id: user._id, email }, process.env.JWT_TOKEN_SECRET, { expiresIn: 1000 * 60 * 60 * 24 * 7 });
       res.cookie('authorization', 'Bearer ' + token, cookie_options);
       return user;
@@ -48,8 +51,8 @@ export const DISCONNECT_USER = async (parent, { _id }, { req, res }) => {
   if (token == null) return new GraphQLError("Token de l'utilisateur introuvable !");
   const cookie_options = {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'PROD',
     sameSite: 'none',
+    secure: true,
     maxAge: 1,
   };
   res.cookie('authorization', 'Bearer ' + token, cookie_options);
