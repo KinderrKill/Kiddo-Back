@@ -1,0 +1,32 @@
+type Mutation {
+  createComment(input: CommentInput): Comment
+  modifyComment(input: CommentInput): Comment
+  removeComment(id: ObjectID!): Comment
+  addReaction(id: ObjectID!, input: CommentReactionInput!): Comment
+}
+
+input CommentInput {
+  _id: ObjectID
+  parent: ObjectID
+  child: [ObjectID]
+  target_user: ObjectID
+  target_event: ObjectID
+  target_article: ObjectID
+  sender: ObjectID
+  deleted_at: DateTime
+  content: CommentContentInput
+  reactions: CommentReactionInput
+  pinned: Boolean
+  signalments: [SignalmentInput]
+}
+
+input CommentContentInput {
+  title: String
+  message: String
+  photos_url: [String]
+}
+
+input CommentReactionInput {
+  type: ObjectID
+  sender: ObjectID
+}

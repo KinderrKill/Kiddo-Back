@@ -1,0 +1,27 @@
+type Comment {
+  _id: ObjectID
+  parent: Comment
+  child: [Comment]
+  target_user: User
+  target_event: Event
+  target_article: Article
+  sender: User
+  created_at: DateTime
+  modified_at: DateTime
+  deleted_at: DateTime
+  content: CommentContent
+  reactions: [CommentReaction]
+  pinned: Boolean
+  signalments: [SignalmentData]
+}
+
+type CommentContent {
+  title: String
+  message: String
+  photos_url: [String]
+}
+
+type CommentReaction {
+  type: Reaction
+  sender: User
+}

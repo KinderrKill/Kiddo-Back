@@ -1,0 +1,33 @@
+# Variables
+enum Status {
+  DRAFTED
+  PUBLIC
+  PUBLISHED
+  CONFIRMED
+  TERMINATED
+  CANCELED
+  UNLISTED
+}
+
+# Common object
+type Location {
+  city: String
+  zip_code: String
+  adress_line: String
+  adress_line_2: String
+}
+
+# type Picture {
+#   hd: URL
+#   thumbnail: URL
+# }
+
+type GeoLoc {
+  lat: Latitude
+  lng: Longitude
+}
+
+type DateRange {
+  start: Timestamp
+  end: Timestamp
+}

@@ -1,0 +1,8 @@
+type Query {
+  getUserById(_id: ObjectID!): User
+  getUserByEmail(email: Emailadress): User
+  users: [User]
+  connectUser(email: Emailadress, password: String): User
+  disconnectUser(_id: ObjectID!): User
+  checkToken: User
+}

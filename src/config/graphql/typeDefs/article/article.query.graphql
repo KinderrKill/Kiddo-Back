@@ -1,0 +1,4 @@
+type Query {
+  Articles: [Article]
+  Article(id: ObjectID!): Article
+}

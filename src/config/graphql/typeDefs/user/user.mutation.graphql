@@ -1,0 +1,80 @@
+type Mutation {
+  createUser(input: UserInput): User
+  modifyUser(_id: ObjectID!, input: UserInput!): User
+  removeUser(_id: ObjectID!): User
+  bookEvent(_id: ObjectID!, eventId: ObjectID!, bookedAt: Date, participant: ParticipantInput): User
+  pinnedEvent(_id: ObjectID!, eventId: ObjectID!, pinnedAt: Date): User
+
+  #Recover Password
+  recoverPassword(email: Emailadress): User
+  resetPassword(_id: ObjectID, email: Emailadress, token: UUID, password: String): User
+  #Friends
+  sendFriendRequest(senderEmail: Emailadress!, targetEmail: Emailadress!): User
+}
+
+##############
+# Main Input
+##############
+input UserInput {
+  connection_history: [ConnectionHistoryInput]
+  rank: String
+
+  token: String
+  email: Emailadress
+  password: String
+  reset_password_token: String
+  oAuth_link: [String]
+
+  pseudo: String
+  first_name: String
+  last_name: String
+  birthdate: Date
+  gender: String
+  phone: PhoneNumber
+  profession: String
+  adress: LocationInput
+  gps: GeoLocInput
+
+  profil_picture: String
+  description: String
+
+  children: [ChildInput]
+  is_available: Boolean
+
+  friends_send_request: [ObjectID]
+  friends_receive_request: [ObjectID]
+  friends: [ObjectID]
+
+  badges: [BadgeInput]
+
+  pinned_events: [ObjectID]
+  booked_events: [ObjectID]
+  finished_events: [FinishedEventInput]
+
+  signalments: [ObjectID]
+  reactions: [ObjectID]
+
+  comments: [ObjectID]
+}
+
+##############
+# Sub Input
+##############
+input ConnectionHistoryInput {
+  ip: IPv4
+  date: DateTime
+}
+
+input ChildInput {
+  id: ObjectID
+  name: String
+  gender: String
+  age: Date
+}
+
+input FinishedEventInput {
+  booked_at: DateTime
+  canceled_at: DateTime
+  started_at: DateTime
+  finished_at: DateTime
+}

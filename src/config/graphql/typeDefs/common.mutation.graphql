@@ -1,0 +1,22 @@
+# Common input
+input LocationInput {
+  city: String
+  zip_code: PostalCode
+  adress_line: String
+  adress_line_2: String
+}
+
+# input PictureInput {
+#   hd: URL
+#   thumbnail: URL
+# }
+
+input GeoLocInput {
+  lat: Latitude
+  lng: Longitude
+}
+
+input DateRangeInput {
+  start: Timestamp
+  end: Timestamp
+}

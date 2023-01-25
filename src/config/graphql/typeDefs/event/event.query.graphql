@@ -1,0 +1,35 @@
+type Query {
+  events(
+    first: Int
+    offset: Int
+    filterKey: String
+    filter: String
+    geoloc: GeoLocInput
+    maxDist: Int
+  ): [Event]
+
+  eventsComplexQuery(
+    input: complexQueryInput  
+  ): EventsResponse
+
+  event(id: ObjectID!): Event
+}
+
+input complexQueryInput {
+    minDate: Timestamp
+    minDraftedAt: Timestamp 
+    minPublishedAt: Timestamp 
+    publishedOrder: String
+    categories: ObjectID
+    searchInput: String 
+    lng: Longitude
+    lat: Latitude
+    maxDistMeters: Int
+    minChildAge: Int
+    maxChildAge: Int
+    status: String
+    restrictionsArray: [ObjectID]
+    first: Int
+    offset: Int
+    dateOrder: String
+}

@@ -1,0 +1,16 @@
+type Query {
+  badges: [Badge]
+  badge: Badge
+
+  categories: [Category]
+  category(name:String): Category
+
+  restrictions: [Restriction]
+  restriction: Restriction
+
+  signalments: [Signalment]
+  signalment: Signalment
+
+  reactions: [Reaction]
+  reaction: Reaction
+}
