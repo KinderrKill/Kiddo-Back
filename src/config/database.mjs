@@ -4,6 +4,7 @@ const CONNECT_TIMEOUT_MS = 3000;
 const SOCKET_TIMOUT_MS = 20000;
 
 export function connectToDB() {
+  mongoose.set('strictQuery', false);
   mongoose
     .connect(process.env.MONGO_URI, {
       connectTimeoutMS: CONNECT_TIMEOUT_MS,

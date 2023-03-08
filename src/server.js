@@ -22,6 +22,8 @@ import { dirname } from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+let server = null;
+
 // Initialisation des paramètres de l'application
 async function startApolloServer() {
   const isProduction = process.env.NODE_ENV === 'PROD';
@@ -35,7 +37,7 @@ async function startApolloServer() {
     resolvers: { ...resolvers, ...scalarsResolvers },
   });
 
-  const server = new ApolloServer({
+  server = new ApolloServer({
     context: (req) => req,
     schema,
     csrfPrevention: true,
@@ -49,7 +51,6 @@ async function startApolloServer() {
   app.use(bodyParser.json());
   app.use(express.static(path.join(__dirname, 'public')));
 
-
   const corsOptions = {
     origin: [process.env.DEV_FRONT_URL, process.env.PROD_FRONT_URL, 'https://studio.apollographql.com'],
     credentials: true,
@@ -57,8 +58,6 @@ async function startApolloServer() {
 
   // Application des Middleware
   server.applyMiddleware({ app, cors: corsOptions });
-
-
 
   // Création d'une promesse de connexion
   await new Promise((resolve) => httpServer.listen(process.env.PORT, resolve));
@@ -72,3 +71,6 @@ async function startApolloServer() {
 
 // Lancement de l'application
 startApolloServer();
+
+// Export ApolloServer instance
+export { server };

@@ -40,15 +40,17 @@ export function isAdmin(req) {
 }
 
 export function getUserByCookieToken(req) {
-  const cookieToken = constants.getRequestCookies(req)['authorization'];
-  const authCookieToken = cookieToken && cookieToken.split(' ')[1];
-  if (authCookieToken == null) return null;
+  const cookieToken = constants.getRequestCookies(req).authorization;
+  if (!cookieToken) return null;
 
-  const jwtResult = jwt.verify(authCookieToken, process.env.JWT_TOKEN_SECRET, (err, result) => {
-    if (err) return null;
-    else if (result) return result._id;
-    else return null;
-  });
+  const authCookieToken = cookieToken.split(' ')[1];
+  if (!authCookieToken) return null;
 
-  return jwtResult;
+  try {
+    const result = jwt.verify(authCookieToken, process.env.JWT_TOKEN_SECRET);
+    return result._id;
+  } catch (err) {
+    console.log('ERROR : getUserByCookieToken', err);
+    return null;
+  }
 }

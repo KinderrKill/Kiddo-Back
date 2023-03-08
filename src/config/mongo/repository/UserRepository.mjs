@@ -36,6 +36,10 @@ export default class UserRepository {
   //==========================================
   // Création et modification de l'utilisateur
   //==========================================
+  async createUser(email, password) {
+    return await userModel.create({ email: email, password: password });
+  }
+
   async modifyUser(id, input) {
     return await userModel.findOneAndUpdate({ _id: id }, input, { new: true });
   }

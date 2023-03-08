@@ -30,8 +30,6 @@ export const USER_CONNECTION = async (parent, { email, password }, { req, res })
         maxAge: 1000 * 60 * 60 * 24 * 7, //Store for 7 days
       };
 
-      console.log('COOKIE OPTION : ', cookie_options);
-
       const token = jwt.sign({ _id: user._id, email }, process.env.JWT_TOKEN_SECRET, { expiresIn: 1000 * 60 * 60 * 24 * 7 });
       res.cookie('authorization', 'Bearer ' + token, cookie_options);
       return user;

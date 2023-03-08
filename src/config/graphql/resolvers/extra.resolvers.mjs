@@ -1,7 +1,9 @@
 import { EXTRA_TYPES } from '../../mongo/repository/ExtraRepository.mjs';
 import ExtraRepository from '../../mongo/repository/ExtraRepository.mjs';
+import EventRepository from '../../mongo/repository/EventRepository.mjs';
 
 const extraRepository = new ExtraRepository();
+const eventRepository = new EventRepository();
 
 export default {
   Query: {
@@ -9,7 +11,7 @@ export default {
     badge: (parent, { _id }) => extraRepository.getBadgeById(_id),
 
     categories: () => extraRepository.getAll(EXTRA_TYPES.CATEGORY),
-    category: (parent, { name }) => extraRepository.getById(EXTRA_TYPES.CATEGORY, {name}),
+    category: (parent, { name }) => extraRepository.getById(EXTRA_TYPES.CATEGORY, { name }),
 
     restrictions: () => extraRepository.getAll(EXTRA_TYPES.RESTRICTION),
     restriction: (parent, { _id }) => extraRepository.getById(EXTRA_TYPES.RESTRICTION, _id),

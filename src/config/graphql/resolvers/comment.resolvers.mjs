@@ -1,3 +1,4 @@
+import { getAsyncIterableWithCancel } from '@graphql-tools/utils';
 import CommentRepository from '../../mongo/repository/CommentRepository.mjs';
 const commentRepository = new CommentRepository();
 
@@ -8,6 +9,13 @@ export default {
     },
     comment: async (parent, { id }, context, info) => {
       return await commentRepository.getById(id);
+    },
+    getSignaledComments: async (parent, args) => {
+      return await commentRepository.getSignaledComments();
+    },
+    getBySenderId: async (parent, { id }) => {
+      const comment = await commentRepository.getBySenderId(id);
+      return comment;
     },
     getByTargetId: async (parent, { type, id }, context, info) => {
       const comments = await commentRepository.getByTargetId(type, id);

@@ -74,11 +74,11 @@ export default class ExtraRepository {
       case EXTRA_TYPES.CATEGORY:
         return await extraSchema.categorySchema.create({ name: value });
       case EXTRA_TYPES.RESTRICTION:
-        return await extraSchema.restrictionSchema.create({ name:  value });
+        return await extraSchema.restrictionSchema.create({ name: value });
       case EXTRA_TYPES.SIGNALMENT:
-        return await extraSchema.signalmentSchema.create({name: value });
+        return await extraSchema.signalmentSchema.create({ name: value });
       case EXTRA_TYPES.REACTION:
-        return await extraSchema.reactionSchema.create({name: value });
+        return await extraSchema.reactionSchema.create({ name: value });
 
       default:
         throw new Error('Wrong ', type, ' not defined in EXTRA_TYPES');

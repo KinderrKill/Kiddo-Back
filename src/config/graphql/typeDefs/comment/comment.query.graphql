@@ -1,5 +1,7 @@
 type Query {
   comments: Comment
   comment(id: ObjectID!): Comment
+  getSignaledComments: [Comment]
+  getBySenderId(id: ObjectID!): Comment
   getByTargetId(type: Int!, id: ObjectID!): [Comment]
 }

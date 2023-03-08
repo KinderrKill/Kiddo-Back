@@ -1,10 +1,10 @@
 import mongoose from 'mongoose';
-import { default as check } from 'validator';
 
 import CommentRepository from '../repository/CommentRepository.mjs';
 import UserRepository from '../repository/UserRepository.mjs';
 import EventRepository from '../repository/EventRepository.mjs';
 
+import { default as check } from 'validator';
 import * as constants from '../../../utils/constant.mjs';
 import * as commonSchema from './common.schema.mjs';
 
@@ -130,7 +130,7 @@ export const UserSchema = new mongoose.Schema(
       {
         name: { type: String },
         gender: { type: String },
-        birthdate: { type: Date },
+        age: { type: Date },
       },
     ],
     is_available: { type: Boolean },

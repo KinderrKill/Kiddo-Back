@@ -21,22 +21,10 @@ const BadgeSchema = new mongoose.Schema(
   schemaOptions
 );
 
-const CategorySchema = new mongoose.Schema(
-  { name: { type: String, required: [true, ERROR_MESSAGE.name] } },
-  schemaOptions
-);
-const RestrictionSchema = new mongoose.Schema(
-  { name: { type: String, required: [true, ERROR_MESSAGE.name] } },
-  schemaOptions
-);
-const SignalmentSchema = new mongoose.Schema(
-  { name: { type: String, required: [true, ERROR_MESSAGE.name] } },
-  schemaOptions
-);
-const ReactionSchema = new mongoose.Schema(
-  { name: { type: String, required: [true, ERROR_MESSAGE.name] } },
-  schemaOptions
-);
+const CategorySchema = new mongoose.Schema({ name: { type: String, required: [true, ERROR_MESSAGE.name] } }, schemaOptions);
+const RestrictionSchema = new mongoose.Schema({ name: { type: String, required: [true, ERROR_MESSAGE.name] } }, schemaOptions);
+const SignalmentSchema = new mongoose.Schema({ name: { type: String, required: [true, ERROR_MESSAGE.name] } }, schemaOptions);
+const ReactionSchema = new mongoose.Schema({ name: { type: String, required: [true, ERROR_MESSAGE.name] } }, schemaOptions);
 
 // CASCADE A LA SUPPRESSION
 BadgeSchema.post('findOneAndRemove', async (doc, next) => {
@@ -45,10 +33,7 @@ BadgeSchema.post('findOneAndRemove', async (doc, next) => {
   if (!users) return next();
 
   for (const user of users) {
-   await user.modifyUser(
-      { _id: user._id },
-      { badges: user.badges.filter(obj => obj.badge_id !== doc._id) }
-    );
+    await user.modifyUser({ _id: user._id }, { badges: user.badges.filter((obj) => obj.badge_id !== doc._id) });
   }
 
   next();
@@ -60,10 +45,7 @@ CategorySchema.post('findOneAndRemove', async (doc, next) => {
   if (!events) return next();
 
   for (const event of events) {
-   await event.modifyEvent(
-      { _id: event._id },
-      { categories: event.categories.filter(id => id !== doc._id) }
-    );
+    await event.modifyEvent({ _id: event._id }, { categories: event.categories.filter((id) => id !== doc._id) });
   }
 
   next();
@@ -73,12 +55,9 @@ RestrictionSchema.post('findOneAndRemove', async (doc, next) => {
   const eventRepository = new EventRepository();
   const events = await eventRepository.getAllByFilter('restrictions', [doc._id]);
   if (!events) return next();
-  
+
   for (const event of events) {
-    await event.modifyEvent(
-      { _id: event._id },
-      { categories: event.restrictions.filter(id => id !== doc._id) }
-    );
+    await event.modifyEvent({ _id: event._id }, { categories: event.restrictions.filter((id) => id !== doc._id) });
   }
 
   next();
@@ -89,10 +68,7 @@ SignalmentSchema.post('findOneAndRemove', async (doc, next) => {
   const events = await eventRepository.getAllByFilter('signalements', [doc._id]);
   if (events) {
     for (const event of events) {
-      await event.modifyEvent(
-        { _id: event._id },
-        { categories: event.signalements.filter(id => id !== doc._id) }
-      );
+      await event.modifyEvent({ _id: event._id }, { categories: event.signalements.filter((id) => id !== doc._id) });
     }
   }
 
@@ -100,12 +76,9 @@ SignalmentSchema.post('findOneAndRemove', async (doc, next) => {
   const users = await userRepository.getAllByFilter('signalements', [doc._id]);
   if (users) {
     for (const user of users) {
-      await user.modifyEvent(
-        { _id: user._id },
-        { categories: user.signalements.filter(id => id !== doc._id) }
-      );
+      await user.modifyEvent({ _id: user._id }, { categories: user.signalements.filter((id) => id !== doc._id) });
     }
-  } 
+  }
   next();
 });
 
@@ -114,45 +87,23 @@ ReactionSchema.post('findOneAndRemove', async (doc, next) => {
   const events = await eventRepository.getAllByFilter('restrictions', [doc._id]);
   if (events) {
     for (const event of events) {
-      await event.modifyEvent(
-        { _id: event._id },
-        { categories: event.restrictions.filter(id => id !== doc._id) }
-      );
+      await event.modifyEvent({ _id: event._id }, { categories: event.restrictions.filter((id) => id !== doc._id) });
     }
   }
-  
+
   const userRepository = new UserRepository();
   const users = await userRepository.getAllByFilter('restrictions', [doc._id]);
   if (users) {
     for (const user of users) {
-      await user.modifyEvent(
-        { _id: user._id },
-        { categories: user.restrictions.filter(id => id !== doc._id) }
-      );
+      await user.modifyEvent({ _id: user._id }, { categories: user.restrictions.filter((id) => id !== doc._id) });
     }
   }
- 
+
   next();
 });
 
 export const badgeSchema = mongoose.model('Badge', BadgeSchema, 'Badges');
-export const categorySchema = mongoose.model(
-  'Category',
-  CategorySchema,
-  'Categories'
-);
-export const restrictionSchema = mongoose.model(
-  'Restriction',
-  RestrictionSchema,
-  'Restrictions'
-);
-export const signalmentSchema = mongoose.model(
-  'Signalment',
-  SignalmentSchema,
-  'Signalments'
-);
-export const reactionSchema = mongoose.model(
-  'Reaction',
-  ReactionSchema,
-  'Reactions'
-);
+export const categorySchema = mongoose.model('Category', CategorySchema, 'Categories');
+export const restrictionSchema = mongoose.model('Restriction', RestrictionSchema, 'Restrictions');
+export const signalmentSchema = mongoose.model('Signalment', SignalmentSchema, 'Signalments');
+export const reactionSchema = mongoose.model('Reaction', ReactionSchema, 'Reactions');

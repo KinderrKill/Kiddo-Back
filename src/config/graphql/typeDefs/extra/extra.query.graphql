@@ -3,7 +3,7 @@ type Query {
   badge: Badge
 
   categories: [Category]
-  category(name:String): Category
+  category(name: String): Category
 
   restrictions: [Restriction]
   restriction: Restriction

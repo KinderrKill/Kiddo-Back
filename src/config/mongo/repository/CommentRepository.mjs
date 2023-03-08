@@ -17,8 +17,24 @@ export default class CommentRepository {
       .exec();
   }
 
+  async getSignaledComments() {
+    const comments = await commentModel.find().populate(POPULATE_COMMENT).exec();
+    const finalComments = comments.filter((v) => v.signalments.length > 0);
+    return finalComments;
+  }
+
   async getById(id) {
-    return await commentModel.findOne({ _id: id }).populate(POPULATE_COMMENT).exec();
+    const comment = await commentModel.findOne({ _id: id }).populate(POPULATE_COMMENT).exec();
+    return comment;
+  }
+
+  async getBySenderId(senderId) {
+    const comment = await commentModel.find().populate(POPULATE_COMMENT).exec();
+    const comment2 = comment
+      .filter((v) => v.sender._id === senderId)
+      .populate(POPULATE_COMMENT)
+      .exec();
+    return comment2;
   }
 
   async getByTargetId(type, id) {

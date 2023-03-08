@@ -36,10 +36,16 @@ export const STATUS_VALUES = {
   CANCELED: 'CANCELED',
 };
 
+export const SIGNALEMENT_TYPE = {
+  COMMENT: 'COMMENT',
+  EVENT: 'EVENT',
+  USER: 'USER',
+};
+
 // Tools
 export const GENERATE_UUID = crypto.randomUUID();
 
-export function getRequestCookies(req) {
+/*export function getRequestCookies(req) {
   const list = [];
   const cookieHeader = req.headers?.cookie;
   if (!cookieHeader) return list;
@@ -54,20 +60,36 @@ export function getRequestCookies(req) {
   });
 
   return list;
+}*/
+
+export function getRequestCookies(req) {
+  const cookies = {};
+  const cookieHeader = req.headers?.cookie;
+  if (!cookieHeader) return cookies;
+
+  cookieHeader.split(';').forEach((cookie) => {
+    const [name, value] = cookie.split('=').map((part) => part.trim());
+    if (!name || !value) return;
+    cookies[name] = decodeURIComponent(value);
+  });
+
+  return cookies;
 }
 
 export function getUserTokenByCookies(req) {
-  const cookieToken = getRequestCookies(req)['authorization'];
-  const authCookieToken = cookieToken && cookieToken.split(' ')[1];
-  if (authCookieToken == null) return false;
+  const cookieToken = getRequestCookies(req).authorization;
+  if (cookieToken === undefined) return null;
 
-  const jwtResult = jwt.verify(authCookieToken, process.env.JWT_TOKEN_SECRET, (err, result) => {
+  cookieToken = cookieToken.split(' ')[1];
+  console.log('COOKIE TOKEN RETURN : ', cookieToken);
+
+  const jwtResult = jwt.verify(cookieToken, process.env.JWT_TOKEN_SECRET, (err, result) => {
     if (err) return false;
     else if (result) return true;
     else return false;
   });
 
-  return jwtResult ? authCookieToken : null;
+  return jwtResult ? cookieToken : null;
 }
 
 export const TOKEN_VALIDITY_TIME = 3000 * 60 * 1000;
