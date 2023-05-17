@@ -33,19 +33,9 @@ Il est responsable de la gestion des fonctionnalités liées aux rencontres entr
   - `/middlewares` : Intercepteur et vérification supplémentaire lors des actions.
   - `/utils` : Utilitaires et fonctions auxiliaires.
 
-## Contribution
+## Auteurs
 
-Les contributions à ce projet sont les bienvenues. Si vous souhaitez apporter des améliorations, veuillez suivre ces étapes :
-
-1. Fork du projet.
-2. Créez une branche pour vos fonctionnalités (`git checkout -b feature/AmazingFeature`).
-3. Committez vos modifications (`git commit -m 'Ajouter une fonctionnalité incroyable'`).
-4. Pushez vers la branche principale (`git push origin feature/AmazingFeature`).
-5. Ouvrez une pull request.
-
-## Auteur
-
-Ce projet a été réalisé par [E-Code](https://github.com/KinderrKill).
+Ce projet a été réalisé par [E-Code](https://github.com/KinderrKill) et [Benjamin A](https://github.com/Baoufa).
 
 ## Remarques
 
